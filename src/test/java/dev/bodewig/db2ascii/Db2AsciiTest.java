@@ -55,10 +55,11 @@ class Db2AsciiTest {
 					ResultSet rs = stmt.executeQuery()) {
 				String result = Db2Ascii.resultSetToString(rs);
 				// @formatter:off
-				String expected = "+----+-------+--------+--------+\r\n"
-						+ "| ID | PRICE | COLOR  | NAME   |\r\n"
-						+ "+----+-------+--------+--------+\r\n"
-						+ "|  1 |   1.5 | yellow | Banana |\r\n"
+				String expected =
+						  "+----+-------+--------+--------+" + System.lineSeparator()
+						+ "| ID | PRICE | COLOR  | NAME   |" + System.lineSeparator()
+						+ "+----+-------+--------+--------+" + System.lineSeparator()
+						+ "|  1 |   1.5 | yellow | Banana |" + System.lineSeparator()
 						+ "+----+-------+--------+--------+";
 				// @formatter:on
 				assertEquals(expected, result);
@@ -75,7 +76,7 @@ class Db2AsciiTest {
 			try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM dual WHERE 1=0");
 					ResultSet rs = stmt.executeQuery()) {
 				String result = Db2Ascii.resultSetToString(rs);
-				String expected = "++\r\n++";
+				String expected = "++" + System.lineSeparator() + "++";
 				assertEquals(expected, result);
 			} catch (SQLException e) {
 				fail(e);
@@ -92,10 +93,11 @@ class Db2AsciiTest {
 			TypedQuery<Fruit> query = em.createQuery(cq);
 			String result = Db2Ascii.queryResultToString(query);
 			// @formatter:off
-			String expected = "+----+--------+--------+-------+\r\n"
-					+ "| id | name   | color  | price |\r\n"
-					+ "+----+--------+--------+-------+\r\n"
-					+ "|  1 | Banana | yellow |   1.5 |\r\n"
+			String expected =
+					  "+----+--------+--------+-------+" + System.lineSeparator()
+					+ "| id | name   | color  | price |" + System.lineSeparator()
+					+ "+----+--------+--------+-------+" + System.lineSeparator()
+					+ "|  1 | Banana | yellow |   1.5 |" + System.lineSeparator()
 					+ "+----+--------+--------+-------+";
 			// @formatter:on
 			assertEquals(expected, result);
@@ -112,7 +114,7 @@ class Db2AsciiTest {
 			cq.select(cq.from(Fruit.class));
 			TypedQuery<Fruit> query = em.createQuery(cq);
 			String result = Db2Ascii.queryResultToString(query);
-			String expected = "++\r\n++";
+			String expected = "++" + System.lineSeparator() + "++";
 			assertEquals(expected, result);
 		} catch (IllegalAccessException e) {
 			fail(e);
