@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>dev.bodewig.db2ascii</groupId>
     <artifactId>db2ascii</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>db2ascii</name>
     <description>A simple utitily to dump database contents in a formatted ascii table</description>

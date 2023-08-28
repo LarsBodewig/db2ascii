@@ -1,3 +1,5 @@
+[![Available on Maven Central](https://img.shields.io/maven-central/v/dev.bodewig.db2ascii/db2ascii?label=Available%20on%20Maven%20Central)](https://central.sonatype.com/artifact/dev.bodewig.db2ascii/db2ascii)
+
 # db2ascii
 
 A small utility to quickly dump your database query results as a formatted ascii table.
@@ -23,7 +25,7 @@ A small utility to quickly dump your database query results as a formatted ascii
 <dependency>
     <groupId>dev.bodewig.db2ascii</groupId>
     <artifactId>db2ascii</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <scope>test</scope>
 </dependency>
 ```
