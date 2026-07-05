@@ -90,7 +90,6 @@
                 <version>2.36.0</version>
                 <configuration>
                     <java>
-                        <eclipse/>
                         <formatAnnotations/>
                         <importOrder/>
                         <removeUnusedImports/>
@@ -101,25 +100,6 @@
                             <expandEmptyElements>false</expandEmptyElements>
                         </sortPom>
                     </pom>
-                    <formats>
-                        <format>
-                            <includes>
-                                <include>**/persistence.xml</include>
-                            </includes>
-                            <prettier>
-                                <devDependencyProperties>
-                                    <property>
-                                        <name>prettier</name>
-                                        <value>2.8.8</value>
-                                    </property>
-                                    <property>
-                                        <name>@prettier/plugin-xml</name>
-                                        <value>2.2.0</value>
-                                    </property>
-                                </devDependencyProperties>
-                            </prettier>
-                        </format>
-                    </formats>
                 </configuration>
                 <executions>
                     <execution>
