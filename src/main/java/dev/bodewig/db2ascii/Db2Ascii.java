@@ -15,7 +15,7 @@ import java.util.List;
  * Collection of utility functions to dump database query results as a formatted
  * ascii table.
  */
-public class Db2Ascii {
+public final class Db2Ascii {
 
 	private Db2Ascii() {
 	}
@@ -152,12 +152,9 @@ public class Db2Ascii {
 		int clazzFieldCount = clazz.getFields().length;
 		ArrayList<String> fieldNames = new ArrayList<>(clazzFieldCount);
 		ArrayList<Field> fields = new ArrayList<>(clazzFieldCount);
-		for (int i = 0; i < clazzFieldCount; i++) {
-			Field field = clazz.getFields()[i];
-			if (field.canAccess(testResult)) { // also filters static fields
-				fieldNames.add(field.getName());
-				fields.add(field);
-			}
+		for (Field field : clazz.getFields()) {
+			fieldNames.add(field.getName());
+			fields.add(field);
 		}
 		int fieldCount = fields.size();
 		String[] headers = fieldNames.toArray(new String[fieldCount]);
