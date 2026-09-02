@@ -1,12 +1,12 @@
 # Automated jobs to support dependabot
 # ---
-# Add the following Github secrets from your Secret Manager
+# Add the following DEPENDABOT secrets from your Secret Manager
 # - PERSONAL_GITHUB_TOKEN
 
 name: Dependabot
 
 on:
-  pull_request_target:
+  pull_request:
     types:
       - opened
       - synchronize
@@ -19,61 +19,26 @@ jobs:
     runs-on: ubuntu-slim
     if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
-      - name: Restore Job Cache
-        id: restore-cache
-        uses: actions/cache@v6
-        with:
-          path: ${{ runner.temp }}/.dependabot-renormalize
-          key: dependabot-renormalize-${{ github.event.pull_request.number }}
-      - name: Read Job Cache Payload
-        if: steps.restore-cache.outputs.cache-hit == 'true'
-        id: read-cache
-        run: echo "cached_sha=$(cat ${{ runner.temp }}/.dependabot-renormalize)" >> $GITHUB_OUTPUT
       - name: Checkout repository
-        if: github.event.pull_request.head.sha != steps.read-cache.outputs.cached_sha
         uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
-          allow-unsafe-pr-checkout: true
-      - name: Verify Commit Author
-        if: github.event.pull_request.head.sha != steps.read-cache.outputs.cached_sha
-        id: author-check
-        run: |
-          COMMIT_AUTHOR=$(git log -1 --pretty=%an)
-          if [[ "$COMMIT_AUTHOR" == "dependabot[bot]" ]]; then
-            echo "is_dependabot=true" >> $GITHUB_OUTPUT
-          else
-            echo "is_dependabot=false" >> $GITHUB_OUTPUT
-          fi
       - name: Run Git Renormalize
-        if: steps.author-check.outputs.is_dependabot == 'true'
-        run: git add --renormalize .
-      - name: Check for changes
-        if: steps.author-check.outputs.is_dependabot == 'true'
-        id: git-check
+        id: git-add
         run: |
-          git diff -w
+          git add --renormalize .
           if [ -n "$(git status --porcelain)" ]; then
             echo "changes=true" >> $GITHUB_OUTPUT
           else
             echo "changes=false" >> $GITHUB_OUTPUT
           fi
       - name: Commit and Push changes
-        if: steps.git-check.outputs.changes == 'true'
+        if: steps.git-add.outputs.changes == 'true'
         env:
           PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit --amend --no-edit
-          git push --force-with-lease origin "HEAD:$PR_HEAD_REF"
-      - name: Prepare Job Cache Payload
-        if: steps.git-check.outputs.changes == 'true'
-        run: echo "$(git rev-parse HEAD)" > ${{ runner.temp }}/.dependabot-renormalize
-      - name: Save Job Cache
-        if: steps.git-check.outputs.changes == 'true'
-        uses: actions/cache/save@v6
-        with:
-          path: ${{ runner.temp }}/.dependabot-renormalize
-          key: dependabot-renormalize-${{ github.event.pull_request.number }}
+          git commit -m "[dependabot skip] Renormalize line endings"
+          git push origin "HEAD:$PR_HEAD_REF"
