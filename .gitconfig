@@ -1,0 +1,7 @@
+# Run `git config --add include.path ../.gitconfig` to include the template config in your project config.
+[init]
+	defaultBranch = main
+[core]
+	editor = vim
+[rebase]
+	autoSquash = true
