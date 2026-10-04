@@ -25,7 +25,7 @@ A small utility to quickly dump your database query results as a formatted ascii
 <dependency>
     <groupId>dev.bodewig.db2ascii</groupId>
     <artifactId>db2ascii</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
     <scope>test</scope>
 </dependency>
 ```
