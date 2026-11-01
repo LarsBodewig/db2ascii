@@ -3,10 +3,10 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>dev.bodewig.db2ascii</groupId>
     <artifactId>db2ascii</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2-SNAPSHOT</version>
 
     <name>db2ascii</name>
-    <description>A simple utitily to dump database contents in a formatted ascii table</description>
+    <description>A simple utility to dump database contents in a formatted ASCII table</description>
     <url>https://github.com/LarsBodewig/db2ascii</url>
     <licenses>
         <license>
@@ -25,19 +25,8 @@
     <scm>
         <connection>scm:git:git://github.com/LarsBodewig/db2ascii.git</connection>
         <developerConnection>scm:git:ssh://github.com:LarsBodewig/db2ascii.git</developerConnection>
-        <url>http://github.com/LarsBodewig/db2ascii</url>
+        <url>https://github.com/LarsBodewig/db2ascii</url>
     </scm>
-    <distributionManagement>
-        <repository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -126,6 +115,24 @@
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <version>3.6.3</version>
+                        <executions>
+                            <execution>
+                                <id>enforce-no-snapshots</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <requireReleaseVersion/>
+                                    </rules>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
                         <version>3.4.0</version>
                         <executions>
@@ -161,6 +168,17 @@
                                 <phase>verify</phase>
                             </execution>
                         </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>0.12.0</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <deploymentName>${project.artifactId}</deploymentName>
+                            <autoPublish>true</autoPublish>
+                            <waitUntil>published</waitUntil>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>

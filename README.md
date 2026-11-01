@@ -2,7 +2,7 @@
 
 # db2ascii
 
-A small utility to quickly dump your database query results as a formatted ascii table.
+A small utility to quickly dump your database query results as a formatted ASCII table.
 
 * Supports both classic `ResultSet` objects and JPA `TypedQuery` objects.
 * Offers functions to print to `System.out`, a designated `PrintStream` or return a formatted `String`
@@ -25,7 +25,7 @@ A small utility to quickly dump your database query results as a formatted ascii
 <dependency>
     <groupId>dev.bodewig.db2ascii</groupId>
     <artifactId>db2ascii</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2-SNAPSHOT</version>
     <scope>test</scope>
 </dependency>
 ```

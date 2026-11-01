@@ -61,7 +61,7 @@ public final class Db2Ascii {
 	 * 
 	 * @param rs
 	 *            an open {@code ResultSet} to read contents from
-	 * @return the formatted ascii table
+	 * @return the formatted ASCII table
 	 * @throws SQLException
 	 *             if reading or navigating the {@code ResultSet} fails
 	 */
